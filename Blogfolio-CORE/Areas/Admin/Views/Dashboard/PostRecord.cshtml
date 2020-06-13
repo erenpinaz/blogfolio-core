@@ -1,0 +1,84 @@
+﻿@model Blogfolio_CORE.Areas.Admin.ViewModels.PostEditModel
+
+@{
+    var currentAction = Context.Request.RouteValues["action"].ToString().ToLower();
+
+    ViewData["PageTitle"] = (currentAction == "addpost") ? "Add new post" : string.Format("Editing: {0}", Model.Title);
+}
+
+<section class="blog">
+    <form class="form d-flex" role="form" autocomplete="off" id="formCreatePost" novalidate="" method="POST" asp-action="@currentAction" asp-controller="Dashboard" asp-area="Admin">
+        <div class="card bg-white col-md-9">
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <input asp-for="PostId" type="hidden" />
+                    <label asp-for="Title"></label>
+                    <input asp-for="Title" placeholder="Enter title" class="form-control" data-slug="source" required>
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Slug"></label>
+                    <input asp-for="Slug" placeholder="example-url-slug" class="form-control" data-slug="field" required>
+                    <span asp-validation-for="Slug" class="text-danger"></span>
+                    <small class="form-text text-muted">@Html.DescriptionFor(q => q.Slug)</small>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Summary"></label>
+                    <input asp-for="Summary" placeholder="Enter summary (excerpt)" class="form-control" required>
+                    <span asp-validation-for="Summary" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Content"></label>
+                    <textarea asp-for="Content" placeholder="Enter summary (excerpt)" class="form-control" data-wysiwyg="true" required></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-white mb-3">
+                <div class="card-header">Settings</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="Status"></label>
+                        <select asp-for="Status" asp-items="new SelectList(Enum.GetValues(typeof (PostStatus)))" class="form-control" required></select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                        <small class="form-text text-muted">@Html.DescriptionFor(q => q.Status)</small>
+                    </div>
+                    <div class="custom-control custom-checkbox mb-3">
+                        <input asp-for="CommentsEnabled" class="custom-control-input">
+                        <label asp-for="CommentsEnabled" class="custom-control-label">@Html.DisplayNameFor(m => m.CommentsEnabled)</label>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Save Post</button>
+                </div>
+            </div>
+            <div class="card bg-white mb-3">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        Categories
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-sm btn-outline-dark" data-refresh="category"><i class="fa fa-sync-alt"></i> Refresh</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul data-list="category" class="list-group list-group-flush"></ul>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var $postId = $('input#PostId');
+            if ($postId.length) {
+                populatePostCategories($postId.val());
+            }
+        });
+    </script>
+}

@@ -1,0 +1,215 @@
+﻿@model Blogfolio_CORE.Areas.Admin.ViewModels.SiteSettingsEditModel
+
+@{
+    ViewData["PageTitle"] = "General Settings";
+    var statusMessage = (string)ViewData["StatusMessage"];
+}
+
+<section class="settings">
+    @using (Html.BeginForm("General", "Settings", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+
+        if (!string.IsNullOrWhiteSpace(statusMessage))
+        {
+            <div class="alert alert-info">@ViewData["StatusMessage"]</div>
+        }
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.Title, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Title) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.Title)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.Tagline, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.Tagline, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Tagline) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.Tagline)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.Heading, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.Heading, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Heading) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.Heading)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.LogoPath, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.LogoPath, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.LogoPath) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.LogoPath)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.SiteUrl, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.SiteUrl, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.SiteUrl) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.SiteUrl)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.MetaDescription, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.MetaDescription, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.MetaDescription) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.MetaDescription)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.MetaKeywords, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.MetaKeywords, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.MetaKeywords) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.MetaKeywords)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.DisqusShortname, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.DisqusShortname, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.DisqusShortname) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.DisqusShortname)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.ShareaholicKey, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.ShareaholicKey, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.ShareaholicKey) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.ShareaholicKey)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.GoogleAnalyticsKey, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.GoogleAnalyticsKey, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.GoogleAnalyticsKey) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.GoogleAnalyticsKey)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.ReCaptchaKey, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-4">
+                @Html.EditorFor(m => m.ReCaptchaKey, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.ReCaptchaKey) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.ReCaptchaKey)
+                </p>
+            </div>
+
+            @Html.LabelFor(m => m.ReCaptchaSecret, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-4">
+                @Html.EditorFor(m => m.ReCaptchaSecret, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.ReCaptchaSecret) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.ReCaptchaSecret)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.PageSize, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.PageSize, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.PageSize) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.PageSize)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.FeedSize, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.FeedSize, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.FeedSize) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.FeedSize)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.ContactEmail, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.ContactEmail, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.ContactEmail) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.ContactEmail)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.SMTPHost, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.SMTPHost, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.SMTPHost) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.SMTPHost)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.SMTPPort, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-5">
+                @Html.EditorFor(m => m.SMTPPort, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.SMTPPort) } })
+            </div>
+
+            @Html.LabelFor(m => m.SMTPEnableSSL, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-3">
+                @Html.EditorFor(m => m.SMTPEnableSSL, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.SMTPEnableSSL) } })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.Label(null, "SMTP Credentials", new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-5">
+                @Html.EditorFor(m => m.SMTPUserName, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.SMTPUserName) } })
+            </div>
+            <div class="col-sm-5">
+                @Html.EditorFor(m => m.SMTPPassword, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.SMTPPassword) } })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.SetupCompleted, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(m => m.SetupCompleted, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.SetupCompleted) } })
+                <p class="form-info">
+                    @Html.DescriptionFor(m => m.SetupCompleted)
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+    }
+</section>

@@ -1,0 +1,80 @@
+﻿@model Blogfolio_CORE.Areas.Admin.ViewModels.ProjectEditModel
+
+@{
+    var currentAction = Context.Request.RouteValues["action"].ToString().ToLower();
+
+    ViewData["PageTitle"] = (currentAction == "addproject") ? "Add new project" : string.Format("Editing: {0}", Model.Name);
+}
+
+<section class="portfolio">
+    <form class="form d-flex" role="form" autocomplete="off" id="formCreateProject" novalidate="" method="POST" asp-action="@currentAction" asp-controller="Dashboard" asp-area="Admin">
+        <div class="card bg-white col-md-9">
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <input asp-for="ProjectId" type="hidden" />
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" placeholder="Enter title" class="form-control" data-slug="source" required>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Slug"></label>
+                    <input asp-for="Slug" placeholder="example-url-slug" class="form-control" data-slug="field" required>
+                    <span asp-validation-for="Slug" class="text-danger"></span>
+                    <small class="form-text text-muted">@Html.DescriptionFor(q => q.Slug)</small>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" placeholder="Enter content" class="form-control" data-wysiwyg="true" required></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-white mb-3">
+                <div class="card-header">Settings</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="Image"></label>
+                        <div id="preview">
+                            <button type="button" class="btn btn-sm btn-light" data-url="@Url.Action("GetFilesByType", "Dashboard", new { type = "image" })"><i class="fa fa-camera"></i></button>
+                            <img src="@Model.Image" alt="your image" />
+                            <input asp-for="Image" type="hidden" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Status"></label>
+                        <select asp-for="Status" asp-items="new SelectList(Enum.GetValues(typeof (ProjectStatus)))" class="form-control" required></select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                        <small class="form-text text-muted">@Html.DescriptionFor(q => q.Status)</small>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Save Project</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Image Browser Modal -->
+    <div class="modal fade" id="imageBrowser" tabindex="-1" role="dialog" aria-labelledby="imageBrowserCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Image Browser</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-deck"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary select-image">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

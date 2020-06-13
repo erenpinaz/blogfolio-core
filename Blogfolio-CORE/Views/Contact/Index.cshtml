@@ -1,0 +1,63 @@
+﻿@model Blogfolio_CORE.ViewModels.ContactEditModel
+
+@{
+    ViewBag.Title = "Contact";
+}
+@{
+    var siteSettings = (Blogfolio_CORE.Areas.Admin.ViewModels.SiteSettingsEditModel)ViewData["SiteSettings"];
+    var socialSettings = (Blogfolio_CORE.Areas.Admin.ViewModels.SocialSettingsEditModel)ViewData["SocialSettings"];
+}
+
+<section class="contact">
+    <h1 class="page-header">
+        @ViewBag.Title
+    </h1>
+
+    @using (Html.BeginForm("SendMessage", "Contact", FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <p>
+            Go ahead and reach me with your projects, business inquiries, etc.
+        </p>
+
+        <div class="form-element-group">
+            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-element", placeholder = "Name goes here" } })
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+
+        <div class="form-element-group">
+            @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-element", placeholder = "Email (example@example.com)" } })
+            @Html.ValidationMessageFor(m => m.Email)
+        </div>
+
+        <div class="form-element-group">
+            @Html.EditorFor(m => m.Subject, new { htmlAttributes = new { @class = "form-element", placeholder = "How may i assist you?" } })
+            @Html.ValidationMessageFor(m => m.Subject)
+        </div>
+
+        <div class="form-element-group">
+            @Html.EditorFor(m => m.Message, new { htmlAttributes = new { @class = "form-element", placeholder = "Details" } })
+            @Html.ValidationMessageFor(m => m.Message)
+        </div>
+
+        if (!string.IsNullOrWhiteSpace(siteSettings.ReCaptchaKey) && !string.IsNullOrWhiteSpace(siteSettings.ReCaptchaSecret))
+        {
+            <div class="form-element-group">
+                <div class="g-recaptcha" data-sitekey="@siteSettings.ReCaptchaKey"></div>
+            </div>
+        }
+
+        <div class="form-element-group">
+            <button type="submit" value="Send Message">Send Message</button>
+        </div>
+    }
+</section>
+
+@section Scripts {
+    @if (!string.IsNullOrWhiteSpace(siteSettings.ReCaptchaKey) && !string.IsNullOrWhiteSpace(siteSettings.ReCaptchaSecret))
+    {
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    }
+}

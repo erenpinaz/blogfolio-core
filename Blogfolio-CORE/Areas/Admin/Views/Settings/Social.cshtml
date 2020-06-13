@@ -1,0 +1,34 @@
+﻿@model Blogfolio_CORE.Areas.Admin.ViewModels.SocialSettingsEditModel
+
+@{
+    ViewData["PageTitle"] = "Social Settings";
+    var statusMessage = (string)ViewData["StatusMessage"];
+}
+
+<section class="settings">
+    @using (Html.BeginForm("Social", "Settings", FormMethod.Post, new { id = "socialSettingsForm", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        if (!string.IsNullOrWhiteSpace(statusMessage))
+        {
+            <div class="alert alert-info">@ViewData["StatusMessage"]</div>
+        }
+
+        <p class="form-info">
+            Order of the elements can be changed by dragging
+        </p>
+
+        <ul id="social-items-container" class="list-inline list-unstyled">
+            @foreach (var settingItem in Model.SocialItems.AsEnumerable())
+            {
+                <partial name="_SocialItem" model="settingItem" />
+            }
+        </ul>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="@Url.Action("AddSocialItem")" class="btn btn-outline-primary" data-ajax="add-social-item"><i class="fa fa-plus"></i> Add Item</a>
+        </div>
+    }
+</section>

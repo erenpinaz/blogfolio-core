@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>@ViewData["PageTitle"] - Blogfolio Admin</title>
+
+    <!-- Site styles -->
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap-table/bootstrap-table.css" />
+        <link rel="stylesheet" href="~/lib/fontawesome-iconpicker/css/fontawesome-iconpicker.css" />
+        <link rel="stylesheet" href="~/lib/dropzone/dropzone.css" />
+        <link rel="stylesheet" href="~/lib/Trumbowyg/ui/trumbowyg.css" />
+        <link rel="stylesheet" href="~/css/admin.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"
+              asp-fallback-href="~/lib/bootstrap/css/bootstrap.min.css" asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous"
+              asp-fallback-href="~/lib/font-awesome/css/all.min.css" asp-fallback-test-class="fa" asp-fallback-test-property="display" asp-fallback-test-value="inline-block" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.15.5/bootstrap-table.min.css" integrity="sha384-P/g/stccCNzevh4v2oX0d2JNytkVt/aAXj7TTG8xEFvo66uansVguApJSc/38GWf" crossorigin="anonymous"
+              asp-fallback-href="~/lib/bootstrap-table/bootstrap-table.min.css" asp-fallback-test-class="bootstrap-table fullscreen" asp-fallback-test-property="position" asp-fallback-test-value="fixed" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome-iconpicker/3.2.0/css/fontawesome-iconpicker.min.css" integrity="sha256-yExEWA6b/bqs3FXxQy03aOWIFtx9QEVnHZ/EwemRLbc=" crossorigin="anonymous"
+              asp-fallback-href="~/lib/fontawesome-iconpicker/css/fontawesome-iconpicker.min.css" asp-fallback-test-class="iconpicker-popover popover" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" integrity="sha256-e47xOkXs1JXFbjjpoRr1/LhVcqSzRmGmPqsrUQeVs+g=" crossorigin="anonymous"
+              asp-fallback-href="~/lib/dropzone/min/dropzone.min.css" asp-fallback-test-class="dropzone" asp-fallback-test-property="box-sizing" asp-fallback-test-value="border-box" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.20.0/ui/trumbowyg.min.css" integrity="sha256-B6yHPOeGR8Rklb92mcZU698ZT4LZUw/hTpD/U87aBPc=" crossorigin="anonymous"
+              asp-fallback-href="~/lib/Trumbowyg/ui/trumbowyg.min.css" asp-fallback-test-class="trumbowyg-box" asp-fallback-test-property="display" asp-fallback-test-value="block" />
+
+        <link rel="stylesheet" href="~/css/admin.min.css" asp-append-version="true" />
+    </environment>
+
+</head>
+<body>
+    <nav class="navbar navbar-dark fixed-top bg-dark p-0 shadow">
+        <div class="navbar-brand col-sm-4 col-md-3 col-lg-2 mr-0"><span class="fa fa-chalkboard"></span> Blogfolio Admin</div>
+        <div class="col-sm-8 col-md-9 col-lg-10">
+            <div class="d-flex justify-content-between align-items-baseline p-2">
+                <a asp-action="Index" asp-controller="Blog" asp-area="" class="text-light">&larr; Return to Blogfolio</a>
+                @if (Context.User.Identity.IsAuthenticated)
+                {
+                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fa fa-cogs"></span> Settings
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a asp-action="General" asp-controller="Settings" asp-area="Admin" class="dropdown-item">General</a>
+                                <a asp-action="Social" asp-controller="Settings" asp-area="Admin" class="dropdown-item">Social</a>
+                            </div>
+                        </div>
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fa fa-user"></span> @Context.User.Identity.Name
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <form class="form-inline" asp-action="Logout" asp-controller="Account" asp-area="Admin" method="post">
+                                    <button type="submit" class="dropdown-item"><span class="fa fa-sign-out-alt"></span>  Logout</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-3 col-lg-2 d-none d-md-block bg-light text-lg-left sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Index" asp-controller="Dashboard" is-active-route>
+                                <i class="fa fa-home"></i>
+                                Dashboard <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Posts" asp-controller="Dashboard" is-active-route>
+                                <i class="fa fa-pencil-alt"></i> Posts
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Categories" asp-controller="Dashboard" is-active-route>
+                                <i class="fa fa-folder-open"></i> Categories
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Projects" asp-controller="Dashboard" is-active-route>
+                                <i class="fa fa-briefcase"></i> Projects
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Media" asp-controller="Dashboard" is-active-route>
+                                <i class="fa fa-palette"></i> Media Library
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">@ViewData["PageTitle"]</h1>
+                </div>
+
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Base -->
+    <div class="modal fade" id="modal-base" tabindex="-1" role="dialog" aria-labelledby="baseModal" aria-hidden="true"></div>
+
+    <!-- Site scripts -->
+    <environment names="Development">
+        <script src="~/lib/jquery/jquery.js"></script>
+        <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/js/jquery.validate.override.js"></script>
+        <script src="~/lib/popper.js/umd/popper.js"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+        <script src="~/lib/bootstrap-table/bootstrap-table.js"></script>
+        <script src="~/lib/Sortable/Sortable.js"></script>
+        <script src="~/lib/fontawesome-iconpicker/js/fontawesome-iconpicker.js"></script>
+        <script src="~/lib/dropzone/dropzone.js"></script>
+        <script type="text/javascript">
+            Dropzone.autoDiscover = false;
+        </script>
+        <script src="~/lib/Trumbowyg/trumbowyg.js"></script>
+        <script src="~/js/admin.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous"
+                asp-fallback-src="~/lib/jquery/jquery.min.js" asp-fallback-test="window.jQuery"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js" integrity="sha384-6UVI3atWyL/qZbDIJb7HW8PyHhFNMiX5rYNY2gAYcaYJjYk5cNIQShSQPBleGMYu" crossorigin="anonymous"
+                asp-fallback-src="~/lib/jquery-validate/jquery.validate.min.js" asp-fallback-test="window.jQuery && window.jQuery.validator"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" integrity="sha384-R3vNCHsZ+A2Lo3d5A6XNP7fdQkeswQWTIPfiYwSpEP3YV079R+93YzTeZRah7f/F" crossorigin="anonymous"
+                asp-fallback-src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive"></script>
+
+        <script src="~/js/jquery.validate.override.min.js" asp-append-version="true"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"
+                asp-fallback-src="~/lib/popper.js/umd/popper.min.js" asp-fallback-test="window.Popper"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"
+                asp-fallback-src="~/lib/bootstrap/js/bootstrap.min.js" asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.15.5/bootstrap-table.min.js" integrity="sha384-h1ojEby9jGU0Cj4twQ+/FiHMUe4dTTAhqb4pHTv8RWPOZkEuBezxYDADWQiyJJl9" crossorigin="anonymous"
+                asp-fallback-src="~/lib/bootstrap-table/bootstrap-table.min.js" asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.bootstrapTable"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.1/Sortable.min.js" integrity="sha256-9D6DlNlpDfh0C8buQ6NXxrOdLo/wqFUwEB1s70obwfE=" crossorigin="anonymous"
+                asp-fallback-src="~/lib/Sortable/Sortable.min.js" asp-fallback-test="window.Sortable"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fontawesome-iconpicker/3.2.0/js/fontawesome-iconpicker.min.js" integrity="sha256-QvBM3HnWsvcCWqpqHZrtoefjB8t2qPNzdSDNyaSNH5Q=" crossorigin="anonymous"
+                asp-fallback-src="~/lib/fontawesome-iconpicker/js/fontawesome-iconpicker.min.js" asp-fallback-test="window.jQuery.fn.iconpicker"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js" integrity="sha256-cs4thShDfjkqFGk5s2Lxj35sgSRr4MRcyccmi0WKqCM=" crossorigin="anonymous"
+                asp-fallback-src="~/lib/dropzone/min/dropzone.min.js" asp-fallback-test="window.Dropzone"></script>
+        <script type="text/javascript">
+            Dropzone.autoDiscover = false;
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.20.0/trumbowyg.min.js" integrity="sha256-oFd4Jr73mXNrGLxprpchHuhdcfcO+jCXc2kCzMTyh6A=" crossorigin="anonymous"
+                asp-fallback-src="~/lib/Trumbowyg/trumbowyg.min.js" asp-fallback-test="window.jQuery.trumbowyg"></script>
+
+        <script src="~/js/admin.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

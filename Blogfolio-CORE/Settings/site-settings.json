@@ -1,0 +1,23 @@
+{
+  "Title": "Blogfolio",
+  "Tagline": "Simple blog & portfolio management",
+  "Heading": "Blogfolio",
+  "LogoPath": "/images/logo.png",
+  "SiteUrl": "http://localhost:5000",
+  "MetaDescription": "Blogfolio, blog and portfolio manager",
+  "MetaKeywords": null,
+  "DisqusShortname": null,
+  "ShareaholicKey": null,
+  "GoogleAnalyticsKey": null,
+  "ReCaptchaKey": null,
+  "ReCaptchaSecret": null,
+  "PageSize": 3,
+  "FeedSize": 5,
+  "ContactEmail": "contact@blogfolio.com",
+  "SMTPHost": null,
+  "SMTPPort": 587,
+  "SMTPUserName": null,
+  "SMTPPassword": null,
+  "SMTPEnableSSL": true,
+  "SetupCompleted": false
+}

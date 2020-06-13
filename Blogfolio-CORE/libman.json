@@ -1,0 +1,71 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "twitter-bootstrap@4.4.1",
+      "destination": "wwwroot/lib/bootstrap/"
+    },
+    {
+      "library": "jquery@3.4.1",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "jquery-validate@1.19.1",
+      "destination": "wwwroot/lib/jquery-validate/"
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.11",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
+    },
+    {
+      "library": "font-awesome@5.11.2",
+      "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "bootstrap-table@1.15.5",
+      "destination": "wwwroot/lib/bootstrap-table/"
+    },
+    {
+      "library": "popper.js@1.16.0",
+      "destination": "wwwroot/lib/popper.js/"
+    },
+    {
+      "library": "Sortable@1.10.1",
+      "destination": "wwwroot/lib/Sortable/"
+    },
+    {
+      "library": "fontawesome-iconpicker@3.2.0",
+      "destination": "wwwroot/lib/fontawesome-iconpicker/"
+    },
+    {
+      "library": "dropzone@5.5.1",
+      "destination": "wwwroot/lib/dropzone/"
+    },
+    {
+      "library": "Trumbowyg@2.20.0",
+      "destination": "wwwroot/lib/Trumbowyg/"
+    },
+    {
+      "library": "masonry@4.2.2",
+      "destination": "wwwroot/lib/masonry/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "imagesloaded@4.1.4",
+      "destination": "wwwroot/lib/imagesloaded/",
+      "files": [
+        "imagesloaded.pkgd.min.js",
+        "imagesloaded.pkgd.js"
+      ]
+    },
+    {
+      "library": "remodal@1.1.1",
+      "destination": "wwwroot/lib/remodal/"
+    },
+    {
+      "library": "prism@1.17.1",
+      "destination": "wwwroot/lib/prism/"
+    }
+  ]
+}

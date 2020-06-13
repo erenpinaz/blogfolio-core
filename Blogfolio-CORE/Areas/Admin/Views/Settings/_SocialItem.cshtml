@@ -1,0 +1,22 @@
+﻿@model Blogfolio_CORE.Areas.Admin.ViewModels.SocialItemEditModel
+
+<li class="list-inline-item">
+    @using (Html.BeginCollectionItem("SocialItems"))
+    {
+        <div class="social-item">
+            <i class="drag-handle fa fa-arrows-alt"></i>
+            <div class="form-group">
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Name) } })
+            </div>
+            <div class="form-group">
+                @Html.EditorFor(m => m.Url, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Url) } })
+            </div>
+            <div class="form-group">
+                @Html.EditorFor(m => m.Icon, new { htmlAttributes = new { @class = "social-icon-picker form-control", placeholder = Html.DisplayNameFor(m => m.Icon) } })
+            </div>
+            <div class="form-group">
+                <a href="#" data-ajax="delete-social-item">Delete Item</a>
+            </div>
+        </div>
+    }
+</li>

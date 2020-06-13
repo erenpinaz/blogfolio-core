@@ -1,0 +1,56 @@
+﻿@model Blogfolio_CORE.Areas.Admin.ViewModels.CreateAdminEditModel
+
+@{
+    ViewData["PageTitle"] = "Create admin account";
+    Layout = "_AccountLayout";
+}
+
+<section class="create-admin">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 min-vh-100 d-flex flex-column justify-content-center">
+                <div class="row">
+                    <div class="col-lg-6 col-md-8 mx-auto">
+                        <div class="card rounded shadow shadow-sm">
+                            <div class="card-body">
+                                <h3 class="card-title text-center">Create Administrator Account</h3>
+                                <hr />
+
+                                <form class="form" role="form" autocomplete="off" id="formCreateAdmin" novalidate="" method="POST" asp-action="CreateAdmin" asp-controller="Account" asp-area="Admin">
+
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                    <div class="form-group">
+                                        <input asp-for="UserName" placeholder="@Html.DisplayNameFor(q => q.UserName)" class="form-control rounded" required>
+                                        <span asp-validation-for="UserName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group form-row">
+                                        <div class="col">
+                                            <input asp-for="Password" placeholder="@Html.DisplayNameFor(q => q.Password)" class="form-control rounded" required>
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                        <div class="col">
+                                            <input asp-for="ConfirmPassword" placeholder="@Html.DisplayNameFor(q => q.ConfirmPassword)" class="form-control rounded" required>
+                                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Name" placeholder="@Html.DisplayNameFor(q => q.Name)" class="form-control rounded" required>
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                        <small class="form-text text-muted">@Html.DescriptionFor(q => q.Name)</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Email" placeholder="@Html.DisplayNameFor(q => q.Email)" class="form-control rounded" required>
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-lg float-right" id="btnLogin">Create</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

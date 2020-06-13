@@ -1,0 +1,69 @@
+﻿@model Blogfolio_CORE.ViewModels.CategoryItemModel
+
+@{
+    ViewBag.Title = Model.Name;
+}
+@{
+    var siteSettings = (Blogfolio_CORE.Areas.Admin.ViewModels.SiteSettingsEditModel)ViewData["SiteSettings"];
+    var socialSettings = (Blogfolio_CORE.Areas.Admin.ViewModels.SocialSettingsEditModel)ViewData["SocialSettings"];
+}
+
+<section class="blog" itemscope itemtype="http://schema.org/Blog">
+    @foreach (var post in Model.Posts)
+    {
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+            <header class="post-header">
+                <h1 class="post-title" itemprop="headline">
+                    <a href="@Url.Action("Post", new {year = post.DateCreated.Year, month = post.DateCreated.Month, slug = post.Slug})">
+                        @post.Title
+                    </a>
+                </h1>
+                <div class="post-meta">
+                    <time class="post-time" itemprop="datePublished" datetime="@post.DateCreated">
+                        <i class="fa fa-clock-o"></i> @post.DateCreated.ToLongDateString()
+                    </time>
+                    <span class="post-author" itemprop="author">
+                        <i>by</i> @post.Author
+                    </span>
+                    @if (post.CommentsEnabled && !string.IsNullOrWhiteSpace(siteSettings.DisqusShortname))
+                    {
+                        <span class="post-comments-link">
+                            <a href="@Url.Action("Post", new {year = post.DateCreated.Year, month = post.DateCreated.Month, slug = post.Slug})#disqus_thread">
+                                Comments
+                            </a>
+                        </span>
+                    }
+                </div>
+            </header>
+            <hr />
+            <div class="post-content" itemprop="articleBody">
+                @Html.Raw(post.Content)
+            </div>
+            <hr />
+            <footer class="post-footer">
+                <ul class="post-categories">
+                    <li>
+                        <a class="post-category" href="@Url.Action("Category", new {slug = Model.Slug})">@Model.Name</a>
+                    </li>
+                </ul>
+            </footer>
+        </article>
+    }
+
+    <!-- Pager -->
+    @Html.PagedListPager(Model.Posts, page => Url.Action("Category", "Blog", new { slug = Model.Slug, page = page }),
+        new PagedListRenderOptionsBase
+        {
+            DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+            DisplayLinkToLastPage = PagedListDisplayMode.Never,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+            DisplayLinkToIndividualPages = false,
+            ContainerDivClasses = new[] { "blog-pager" },
+            UlElementClasses = new[] { "pager" },
+            ClassToApplyToFirstListItemInPager = "next",
+            ClassToApplyToLastListItemInPager = "previous",
+            LinkToPreviousPageFormat = "Newer &rarr;",
+            LinkToNextPageFormat = "&larr; Older"
+        })
+</section>

@@ -1,0 +1,39 @@
+﻿@model Blogfolio_CORE.Areas.Admin.ViewModels.CategoryEditModel
+
+@{
+    var currentAction = Context.Request.RouteValues["action"].ToString().ToLower();
+}
+
+<!-- Modal Content -->
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <form class="form" role="form" autocomplete="off" id="formCreateCategory" novalidate="" method="POST" asp-action="@currentAction" asp-controller="Dashboard" asp-area="Admin">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <input asp-for="CategoryId" type="hidden" />
+                    <input asp-for="Name" placeholder="@Html.DisplayNameFor(q => q.Name)" class="form-control rounded" data-slug="source" required>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Slug" placeholder="@Html.DisplayNameFor(q => q.Slug)" class="form-control rounded" data-slug="field" required>
+                    <span asp-validation-for="Slug" class="text-danger"></span>
+                    <small class="form-text text-muted">@Html.DescriptionFor(q => q.Slug)</small>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save Category</button>
+            </div>
+        </form>
+    </div>
+</div>

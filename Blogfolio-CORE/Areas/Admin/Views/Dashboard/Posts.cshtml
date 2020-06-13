@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["PageTitle"] = "Posts";
+}
+
+<section class="post">
+    <div class="card">
+        <div class="card-body">
+            <div id="toolbar">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" asp-action="AddPost" asp-controller="Dashboard" asp-area="Admin">New</a>
+                        <a class="dropdown-item" href="#" onclick="bulkDeletePost(event);">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <table id="posts-table"
+                   data-toggle="table"
+                   data-toolbar="#toolbar"
+                   data-search="true"
+                   data-show-refresh="true"
+                   data-show-toggle="true"
+                   data-show-fullscreen="true"
+                   data-show-columns="true"
+                   data-show-export="true"
+                   data-click-to-select="true"
+                   data-minimum-count-columns="2"
+                   data-pagination="true"
+                   data-id-field="postid"
+                   data-page-list="[10, 25, 50]"
+                   data-show-footer="true"
+                   data-side-pagination="server"
+                   data-url="@Url.Action("PostTableData", "Dashboard")">
+                <thead>
+                    <tr>
+                        <th data-field="state" data-checkbox="true"></th>
+                        <th data-field="postid" data-visible="false">Post ID</th>
+                        <th data-field="title" data-formatter="postTitleFormatter"
+                            data-events="postTitleEvents">
+                            Title
+                        </th>
+                        <th data-field="author">Author</th>
+                        <th data-field="summary">Summary</th>
+                        <th data-field="categories" data-formatter="postCategoriesFormatter"
+                            data-width="120px">
+                            Categories
+                        </th>
+                        <th data-field="commentsenabled" data-formatter="postCommentsSectionFormatter">Comments Section</th>
+                        <th data-field="status">Status</th>
+                        <th data-field="created" data-formatter="jsonDateFormatter">Created</th>
+                        <th data-field="updated" data-visible="false" data-formatter="jsonDateFormatter">Updated</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</section>

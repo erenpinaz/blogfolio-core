@@ -1,0 +1,238 @@
+﻿@{
+    var siteSettings = (Blogfolio_CORE.Areas.Admin.ViewModels.SiteSettingsEditModel)ViewData["SiteSettings"];
+    var socialSettings = (Blogfolio_CORE.Areas.Admin.ViewModels.SocialSettingsEditModel)ViewData["SocialSettings"];
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+    <title>@(ViewBag.Title ?? siteSettings.Title)@(!string.IsNullOrWhiteSpace(siteSettings.Tagline) ? " - " + siteSettings.Tagline : "")</title>
+    <meta name="description" content="@siteSettings.MetaDescription">
+
+    @if (!string.IsNullOrWhiteSpace(siteSettings.MetaKeywords))
+    {
+    <meta name="keywords" content="@siteSettings.MetaKeywords">
+    }
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <!-- Site styles -->
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
+        <link rel="stylesheet" href="~/lib/remodal/remodal.css" />
+        <link rel="stylesheet" href="~/lib/remodal/remodal-default-theme.css" />
+        <link rel="stylesheet" href="~/lib/prism/themes/prism.css" />
+        <link rel="stylesheet" href="~/lib/prism/plugins/toolbar/prism-toolbar.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous"
+              asp-fallback-href="~/lib/font-awesome/css/all.min.css" asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remodal/1.1.1/remodal.min.css" integrity="sha256-NIskOH7eNIjyJFpUeh3DlE9n1amcG/bzVKbWxuIgiH4=" crossorigin="anonymous"
+              asp-fallback-href="~/lib/remodal/remodal.min.css" asp-fallback-test-class="remodal" asp-fallback-test-property="display" asp-fallback-test-value="none" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remodal/1.1.1/remodal-default-theme.min.css" integrity="sha256-iJlvlQFv31232zI/zrsL/jbuubLWWr/Bv99d+XfaC7Y=" crossorigin="anonymous"
+              asp-fallback-href="~/lib/remodal/remodal-default-theme.min.css" asp-fallback-test-class="remodal-close" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism.min.css" integrity="sha256-77qGXu2p8NpfcBpTjw4jsMeQnz0vyh74f5do0cWjQ/Q=" crossorigin="anonymous"
+              asp-fallback-href="~/lib/prism/themes/prism.min.css" asp-fallback-test-class="token entity" asp-fallback-test-property="cursor" asp-fallback-test-value="help" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/toolbar/prism-toolbar.min.css" integrity="sha256-P45OhhEWm49G8sadt2n5rDaWLa3xZbDOQhJliuaojH0=" crossorigin="anonymous"
+              asp-fallback-href="~/lib/prism/plugins/toolbar/prism-toolbar.min.css" asp-fallback-test-class="code-toolbar" asp-fallback-test-property="position" asp-fallback-test-value="relative"/>
+
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,700&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+    <!-- Shareaholic -->
+    @if (!string.IsNullOrWhiteSpace(siteSettings.ShareaholicKey))
+    {
+    <script type='text/javascript' src='//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js' data-shr-siteid='@siteSettings.ShareaholicKey' data-cfasync='false' async='async'></script>
+    }
+</head>
+<body>
+    <div class="app-wrapper">
+        <header class="app-header">
+            <div class="header-inner">
+                <div class="logo">
+                    <a href="/">
+                        <img src="@siteSettings.LogoPath" alt="site-logo">
+                    </a>
+                </div>
+                <div class="site-information">
+                    <h1 class="site-title">@siteSettings.Title</h1>
+                    <h2 class="site-tagline">@siteSettings.Tagline</h2>
+                </div>
+                <div class="site-social">
+                    @if (socialSettings != null && socialSettings.SocialItems.Count > 0)
+                    {
+                        <div class="site-social">
+                            <ul class="social-items">
+                                @foreach (var socialItem in socialSettings.SocialItems)
+                                {
+                                    <li>
+                                        <a href="@socialItem.Url" title="@socialItem.Name" target="_blank">
+                                            <span class="@socialItem.Icon"></span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                </div>
+                <nav class="app-nav">
+                    <a id="nav-toggle" href="#">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                    <h3 class="navbar-header">Menu</h3>
+
+                    <ul class="navbar-items">
+                        <li>
+                            <a asp-action="Index" asp-controller="Blog" is-active-route>Blog</a>
+                        </li>
+                        <li>
+                            <a asp-action="Index" asp-controller="Portfolio" is-active-route>Portfolio</a>
+                        </li>
+                        <li>
+                            <a asp-action="Index" asp-controller="About" is-active-route>About</a>
+                        </li>
+                        <li>
+                            <a asp-action="Index" asp-controller="Contact" is-active-route>Contact</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main class="app-content">
+            <div class="content-inner">
+                @RenderBody()
+            </div>
+
+            <footer class="app-footer footer">
+                <div class="footer-inner">
+                    <p>
+                        <span>Copyright &copy; 2020</span>
+                        <span>Blogfolio</span>
+                        <span><a href="@Url.Action("Feed", "Blog")">Feed</a></span>
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <span><a href="@Url.Action("Login", "Account", new {area = "Admin"})">Login</a></span>
+                        }
+                        else
+                        {
+                            <span><a href="@Url.Action("Posts", "Dashboard", new {area = "Admin"})">Admin</a></span>
+                        }
+                    </p>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    @if (!siteSettings.SetupCompleted)
+    {
+        <div id="setupModal" data-remodal-id="modal">
+            <h1>Awaiting Setup</h1>
+            <hr />
+            <ol style="text-align: left;">
+                <li>First time setup process has not yet been completed. Go to <a asp-action="CreateAdmin" asp-controller="Account" asp-area="Admin">Create Administrator Account</a> page.</li>
+                <li>Setup status can be marked as completed from <a asp-action="General" asp-controller="Settings" asp-area="Admin">General Settings</a> page.</li>
+            </ol>
+        </div>
+    }
+
+    <!-- Site scripts -->
+    <environment names="Development">
+        <script src="~/lib/jquery/jquery.js"></script>
+        <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/lib/masonry/masonry.pkgd.js"></script>
+        <script src="~/lib/imagesloaded/imagesloaded.pkgd.js"></script>
+        <script src="~/lib/remodal/remodal.js"></script>
+        <script src="~/lib/prism/components/prism-core.js"></script>
+        <script src="~/lib/prism/plugins/autoloader/prism-autoloader.js"></script>
+        <script src="~/lib/prism/plugins/toolbar/prism-toolbar.js"></script>
+        <script src="~/lib/prism/plugins/show-language/prism-show-language.js"></script>
+        <script src="~/js/site.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous"
+                asp-fallback-src="~/lib/jquery/jquery.min.js" asp-fallback-test="window.jQuery">
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js" integrity="sha384-6UVI3atWyL/qZbDIJb7HW8PyHhFNMiX5rYNY2gAYcaYJjYk5cNIQShSQPBleGMYu" crossorigin="anonymous"
+                asp-fallback-src="~/lib/jquery-validate/jquery.validate.min.js" asp-fallback-test="window.jQuery && window.jQuery.validator"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" integrity="sha384-R3vNCHsZ+A2Lo3d5A6XNP7fdQkeswQWTIPfiYwSpEP3YV079R+93YzTeZRah7f/F" crossorigin="anonymous"
+                asp-fallback-src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"
+                asp-fallback-src="~/lib/masonry/masonry.pkgd.min.js" asp-fallback-test="window.Masonry"></script>
+
+        <script src="https://unpkg.com/imagesloaded@4.1.4/imagesloaded.pkgd.min.js" integrity="sha384-YnGSHPPWEUDKMHFPOVmNP7Xyfwx5G0CHet6IoNgiX6CbFZS8gCeIfEgB1MgPwjdI" crossorigin="anonymous"
+                asp-fallback-src="~/lib/imagesloaded/imagesloaded.pkgd.min.js" asp-fallback-test="window.imagesLoaded"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/remodal/1.1.1/remodal.min.js" integrity="sha256-tR7fz2fCeycqI9/V8mL9nyTc4lI14kg2Qm6zZHuupxE=" crossorigin="anonymous"
+                asp-fallback-src="~/lib/remodal/remodal.min.js" asp-fallback-test="window.jQuery && window.jQuery.remodal"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-core.min.js" integrity="sha256-Y+Budm2wBEjYjbH0qcJRmLuRBFpXd0VKxl6XhdS4hgA=" crossorigin="anonymous"
+                asp-fallback-src="~/lib/prism/components/prism-core.min.js" asp-fallback-test="window.Prism"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-ht8ay6ZTPZfuixYB99I5oRpCLsCq7Do2LjEYLwbe+X8=" crossorigin="anonymous"
+                asp-fallback-src="~/lib/prism/plugins/autoloader/prism-autoloader.min.js" asp-fallback-test="window.Prism && window.Prism.plugins.autoloader"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/toolbar/prism-toolbar.js" integrity="sha256-iJFbnVzGXCJO0awSz0h9ce5CWFR+SoVDroV0QuketYg=" crossorigin="anonymous"
+                asp-fallback-src="~/lib/prism/plugins/toolbar/prism-toolbar.min.js" asp-fallback-test="window.Prism && window.Prism.plugins.toolbar"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/show-language/prism-show-language.min.js" integrity="sha256-bwVrO8ECEK5HN4Zr1Z/cwxs8DysLOWazfGwLRWQ7M58=" crossorigin="anonymous"
+                asp-fallback-src="~/lib/prism/plugins/show-language/prism-show-language.min.js" asp-fallback-test="window.Prism && window.Prism.plugins.toolbar"></script>
+
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("scripts", required: false)
+
+    <!-- Google Analytics -->
+    @if (!string.IsNullOrWhiteSpace(siteSettings.GoogleAnalyticsKey))
+    {
+        <script type="text/javascript">
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', '@siteSettings.GoogleAnalyticsKey']);
+                _gaq.push(['_trackPageview']);
+                (function () {
+                    var ga = document.createElement('script');
+                    ga.type = 'text/javascript';
+                    ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(ga, s);
+                })();
+        </script>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(siteSettings.DisqusShortname))
+    {
+        <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES * * */
+        var disqus_shortname = '@siteSettings.DisqusShortname';
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+        </script>
+    }
+
+</body>
+</html>

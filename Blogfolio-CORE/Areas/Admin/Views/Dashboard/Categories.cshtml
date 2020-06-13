@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["PageTitle"] = "Categories";
+}
+
+<section class="category">
+    <div class="card">
+        <div class="card-body">
+            <div id="toolbar">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" asp-action="AddCategory" asp-controller="Dashboard" asp-area="Admin" data-modal>New</a>
+                        <a class="dropdown-item" href="#" onclick="bulkDeleteCategory(event);">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <table id="categories-table"
+                   data-toggle="table"
+                   data-toolbar="#toolbar"
+                   data-search="true"
+                   data-show-refresh="true"
+                   data-show-toggle="true"
+                   data-show-fullscreen="true"
+                   data-show-columns="true"
+                   data-show-export="true"
+                   data-click-to-select="true"
+                   data-minimum-count-columns="2"
+                   data-pagination="true"
+                   data-id-field="postid"
+                   data-page-list="[10, 25, 50]"
+                   data-show-footer="true"
+                   data-side-pagination="server"
+                   data-url="@Url.Action("CategoryTableData", "Dashboard")">
+                <thead>
+                    <tr>
+                        <th data-field="state" data-checkbox="true"></th>
+                        <th data-field="categoryid" data-visible="false">Category ID</th>
+                        <th data-field="name" data-formatter="categoryNameFormatter"
+                            data-events="categoryNameEvents">
+                            Name
+                        </th>
+                        <th data-field="slug">Slug</th>
+                        <th data-field="totalposts">Total Posts</th>
+                        <th data-field="created" data-formatter="jsonDateFormatter">Created</th>
+                        <th data-field="updated" data-visible="false" data-formatter="jsonDateFormatter">Updated</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</section>
