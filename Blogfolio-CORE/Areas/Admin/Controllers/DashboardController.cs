@@ -530,6 +530,9 @@ namespace Blogfolio_CORE.Areas.Admin.Controllers
                         // Update unmapped properties
                         recProject.Name = model.Name;
                         recProject.Slug = model.Slug;
+                        recProject.Description = model.Description;
+                        recProject.Image = model.Image;
+                        recProject.Status = model.Status;
                         recProject.DateModified = DateTime.UtcNow;
 
                         // Update
