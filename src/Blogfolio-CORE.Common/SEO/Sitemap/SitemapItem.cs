@@ -30,8 +30,7 @@ namespace Blogfolio_CORE.Common.SEO.Sitemap
         public SitemapItem(string url, DateTime? lastModified = null, SitemapChangeFrequency? changeFrequency = null,
             double? priority = null)
         {
-            if (url == null)
-                throw new ArgumentNullException(nameof(url));
+            ArgumentNullException.ThrowIfNull(url);
 
             Url = url;
             LastModified = lastModified;
