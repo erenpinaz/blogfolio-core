@@ -63,7 +63,7 @@
         }
 
         <!-- Pager -->
-        @Html.PagedListPager(Model, page => Url.Action("Index", "Blog", new { page = page }), new PagedListRenderOptionsBase
+        @Html.PagedListPager(Model, page => Url.Action("Index", "Blog", new { page = page }), new PagedListRenderOptions
             {
                 DisplayLinkToFirstPage = PagedListDisplayMode.Never,
                 DisplayLinkToLastPage = PagedListDisplayMode.Never,

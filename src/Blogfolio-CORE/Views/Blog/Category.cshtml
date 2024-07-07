@@ -52,7 +52,7 @@
 
     <!-- Pager -->
     @Html.PagedListPager(Model.Posts, page => Url.Action("Category", "Blog", new { slug = Model.Slug, page = page }),
-        new PagedListRenderOptionsBase
+        new PagedListRenderOptions
         {
             DisplayLinkToFirstPage = PagedListDisplayMode.Never,
             DisplayLinkToLastPage = PagedListDisplayMode.Never,
